@@ -1,0 +1,55 @@
+.content.center-block
+  %h1 
+    Commit
+    = @commit.sha 
+
+  %h2 
+    Title:
+    = @ticket_info["summary"]
+
+  %h2 
+    Ticket Number:
+    = @commit.ticket
+
+  %h4 Description
+  = simple_format(@ticket_info["description"])
+
+  -if @related_commits.exists?
+    %h4 Oher Commits for this ticket:
+    %table.table-striped.table.table-bordered.table-hover.table-condensed
+      %tr
+      %th Sha
+      %th Message
+      %th Author
+      %th Authored Date
+      %th Committer
+      %th Committed Date
+      %th Comment
+      %th Ticket Number
+      %th Repo
+      %th Branch
+      -@related_commits.each do |commit|
+        %tr
+          %td
+            %a{:href => "https://flatworld.unfuddle.com/a#/projects/115911/tickets/by_number/#{commit.ticket}", :target => "_blank"} 
+              = commit.sha_short
+          %td 
+            = commit.message
+          %td 
+            = commit.author
+          %td 
+            = commit.authored_date
+          %td 
+            = commit.committer
+          %td 
+            = commit.committed_date
+          %td
+            %a.commit_comment{"data-toggle" => "popover", "data-placement" => "top", "data-content" => "#{commit.comment}", "data-original-title" => "", title: ""} 
+              Here
+          %td
+            = link_to commit.ticket, commit_path(@commit)
+          %td
+            REPO
+          %td
+            = commit.branch
+

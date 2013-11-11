@@ -1,0 +1,47 @@
+.content.center-block
+  %h1 Tixxer
+
+  #nav
+    /%form#change_branch{:action => "change_branch", :method => "post"}
+    = form_tag '/change_branch', id: "change_branch" do
+      = field_set_tag do
+        = select "current", "branch", @branches, {selected: @git.current_branch}, { :class => 'form-control, pull-left', id: 'branch' }
+    
+
+    %input.form-control.pull-right#search{type: "text", placeholder: "Search Commits/Tickets"}
+
+  %table.table-striped.table.table-bordered.table-hover.table-condensed#commits_table
+    %tr
+      %th Sha
+      %th Message
+      %th Author
+      %th Authored Date
+      %th Committer
+      %th Committed Date
+      %th Comment
+      %th Ticket Number
+      %th Repo
+      %th Branch
+    -@commits.each do |commit|
+      %tr
+        %td
+          %a{:href => "https://#{Figaro.env.unfuddle_account}.unfuddle.com/a#/projects/#{Figaro.env.current_project_id}/tickets/by_number/#{commit.ticket}", :target => "_blank"} 
+            = commit.sha_short
+        %td 
+          = commit.message
+        %td 
+          = commit.author
+        %td 
+          = commit.authored_date
+        %td 
+          = commit.committer
+        %td 
+          = commit.committed_date
+        %td 
+          = commit.comment
+        %td
+          = link_to commit.ticket, commit_path(commit)
+        %td
+          REPO
+        %td
+          = commit.branch

@@ -1,0 +1,32 @@
+// Place all the styles related to the index controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.content{
+	width: 90%;
+}
+
+#nav{
+
+	width: 100%;
+	height: 50px;
+
+	#branch{
+		width: 300px;
+		height: 26px;
+		margin: 10px 0;
+	}
+
+	#search{
+		width: 200px;
+		margin-bottom: 10px;
+	}
+}
+
+
+#commits_table{
+	a{
+		color: #3E94D1;
+	}
+}
+
